@@ -36,39 +36,31 @@ public class CustomArrayList<E> {
         elements = (E[]) new Object[initialCapacity];
         size = 0;
     }
-
     public boolean isEmpty() {
         return size == 0;
     }
-
     void add(int index, E element) {
         if (index < 0 | index > size) {
             throw new IndexOutOfBoundsException("Index: " + index + ", Size: " + size);
         }
-
         if (size == elements.length) {
             resize();
         }
-
         for (int i = size; i > index; i--) {
             elements[i] = elements[i - 1];
         }
-
         elements[index] = element;
         size++;
     }
-
     void add(E element) {
         if (size == elements.length) {
             resize();
         }
         elements[size++] = element;
     }
-
     E get(int index) {
         return elements[index];
     }
-
     private void resize() {
         int newCapacity = elements.length * 2;
         E[] newElements = (E[]) new Object[newCapacity];
@@ -77,7 +69,6 @@ public class CustomArrayList<E> {
         }
         elements = newElements;
     }
-
     E remove(int index) {
         elements[index] = null;
         for (int i = index + 1; i < elements.length; ++i) {
@@ -86,7 +77,6 @@ public class CustomArrayList<E> {
         size = elements.length - 1;
         return elements[index];
     }
-
     E remove(Object o) {
         for (int i = 0; i < elements.length; ++i) {
             if (elements[i].equals(o)) {
@@ -99,7 +89,6 @@ public class CustomArrayList<E> {
         }
         return null;
     }
-
     void addAll(Collection<? extends E> collection) {
         int collectionSize = collection.toArray().length + elements.length + 1;
         E[] newElements = (E[]) new Object[collectionSize];
@@ -107,7 +96,6 @@ public class CustomArrayList<E> {
             newElements[i] = (E)collection.toArray()[i];
         }
     }
-
     boolean contains(Object o) {
         for (E e : elements) {
             if (e.equals(o)) {
@@ -116,12 +104,10 @@ public class CustomArrayList<E> {
         }
         return false;
     }
-
     void clear() {
         elements = (E[]) new Object[DEFAULT_CAPACITY];
         this.size = 0;
     }
-
     public String toString() {
         StringBuilder sb = new StringBuilder();
         sb.append("[");
@@ -138,7 +124,6 @@ public class CustomArrayList<E> {
     void sort(Comparator<? super E> c) {
         quicksort(elements, 0, elements.length - 1, c);
     }
-
     private void quicksort(E[] arr, int low, int high, Comparator<? super E> c) {
         if (low < high) {
             int pi = partition(arr, low, high, c);
@@ -150,22 +135,18 @@ public class CustomArrayList<E> {
     private int partition(E[] arr, int low, int high, Comparator<? super E> c) {
         E pivot = arr[high];
         int i = low - 1;
-
         for (int j = low; j < high; j++) {
             if (c.compare(arr[j], pivot) <= 0) {
                 i++;
                 swap(arr, i, j);
             }
         }
-
         swap(arr, i + 1, high);
         return i + 1;
     }
-
     private void swap(E[] arr, int i, int j) {
         E temp = arr[i];
         arr[i] = arr[j];
         arr[j] = temp;
     }
-
 }
